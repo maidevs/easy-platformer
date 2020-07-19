@@ -11,6 +11,8 @@ public class CharacterStateMachine
     public CharacterMoveState MoveState;
     public CharacterJumpState JumpState;
     public CharacterFallingState FallingState;
+    public CharacterWallSlideState WallSlideState;
+    public CharacterWallJumpState WallJumpState;
 
     private CharacterBaseState _state;
     
@@ -22,6 +24,8 @@ public class CharacterStateMachine
         MoveState = new CharacterMoveState(this, _controller);
         JumpState = new CharacterJumpState(this, _controller);
         FallingState = new CharacterFallingState(this, _controller);
+        WallSlideState = new CharacterWallSlideState(this, _controller);
+        WallJumpState = new CharacterWallJumpState(this, _controller);
 
         _state = IdleState;
     }

@@ -13,7 +13,7 @@ public static class Collider2DExtensions
         return center - extents;
     }
 
-    public static Vector3 BottomCenter(this Collider2D collider)
+    public static Vector3 Bottom(this Collider2D collider)
     {
         Vector3 center = collider.bounds.center;
         Vector3 extents = collider.bounds.extents;
@@ -37,7 +37,7 @@ public static class Collider2DExtensions
         return center + extents;
     }
 
-    public static Vector3 TopCenter(this Collider2D collider)
+    public static Vector3 Top(this Collider2D collider)
     {
         Vector3 center = collider.bounds.center;
         Vector3 extents = collider.bounds.extents;

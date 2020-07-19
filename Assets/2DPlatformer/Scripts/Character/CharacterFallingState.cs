@@ -9,18 +9,19 @@ public class CharacterFallingState : CharacterBaseState
 
     private Vector3 horizontalForce;
 
-    public CharacterFallingState(CharacterStateMachine stateMachine, PlatformerController controller) : base(stateMachine, controller) { }
+    public CharacterFallingState(CharacterStateMachine stateMachine, PlatformerController controller) : base(stateMachine, controller)
+    {
+    }
 
     public override void OnStateEnter()
     {
         _controller.Animator.SetTrigger(FALLING_ANIMATION_ID);
-}
-    
+    }
+
     public override void OnStateExit()
     {
-        _controller.SnapToGroundSurface();
     }
-    
+
     public override void RunStateRoutine()
     {
         _controller.HorizontalMovement();
@@ -28,13 +29,10 @@ public class CharacterFallingState : CharacterBaseState
 
     public override void CheckForStateChange()
     {
-
-        if (_controller.IsGrounded)
-        {
-            if (_controller.CanMove()) { _stateMachine.ChangeState(_stateMachine.MoveState); }
-            else { _stateMachine.ChangeState(_stateMachine.IdleState); } 
-        }
-
+        if (_controller.IsGrounded && _controller.CanMoveToInputDirection()) { _stateMachine.ChangeState(_stateMachine.MoveState); }
+        else if (_stateMachine.WallSlideState.IsPushingAgainstWallOnAir()) { _stateMachine.ChangeState(_stateMachine.WallSlideState); }
+        else if (_controller.IsGrounded) { _stateMachine.ChangeState(_stateMachine.IdleState); }
+        else if (!_controller.IsGrounded && _controller.Body.IsInCoyoteTime && _controller.Input.IsPressingJump()) { _stateMachine.ChangeState(_stateMachine.JumpState); }
     }
 
 
